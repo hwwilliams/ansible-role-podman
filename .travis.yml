@@ -1,0 +1,27 @@
+---
+language: python
+services: docker
+
+env:
+  global:
+    - ROLE_NAME: podman
+  matrix:
+    - MOLECULE_DISTRO: centos7
+    - MOLECULE_DISTRO: centos6
+    - MOLECULE_DISTRO: fedora29
+    - MOLECULE_DISTRO: fedora28
+    - MOLECULE_DISTRO: fedora27
+
+install:
+  - pip install molecule==2.19 docker
+
+before_script:
+  - cd ../
+  - mv ansible-role-$ROLE_NAME hwwilliams.$ROLE_NAME
+  - cd hwwilliams.$ROLE_NAME
+
+script:
+  - travis_wait molecule test
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
