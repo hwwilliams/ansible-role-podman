@@ -1,7 +1,7 @@
 ---
 - name: Ensure Extra RPMs Repo Is Enabled (RHEL7)
   rhsm_repository:
-    name: rhel-7-server-extras-rpms
+    name: '{{ podman_rhel7_extra_repo }}'
     state: enabled
   when:
     - ansible_os_family | lower == 'redhat'
@@ -11,5 +11,5 @@
 - name: Ensure Podman Is Present
   become: true
   package:
-    name: podman
+    name: '{{ podman_package }}'
     state: present
